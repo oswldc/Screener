@@ -1,0 +1,11 @@
+# Dependensi
+/node_modules
+
+# File env
+.env
+
+# File upload kandidat
+/uploads
+
+# Log
+*.log

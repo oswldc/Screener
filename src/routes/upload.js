@@ -48,7 +48,7 @@ router.post('/', upload.single('file'), async (req, res) => {
     }
 
     const result = await pool.query(
-      'INSERT INTO uploads (filename, filepath, filetype) VALUES ($1, $2, $3) RETURNING id',
+      'INSERT INTO uploads (type, filename, filepath) VALUES ($1, $2, $3) RETURNING id',
       [type, file.originalname, file.path]
     );
 

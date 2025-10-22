@@ -13,7 +13,6 @@ app.use(express.json());
 app.use('/upload', uploadRoutes);
 app.use('/evaluate', evaluateRoutes);
 app.use('/result', resultRoutes);
-setInterval(runQueue, 10000);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

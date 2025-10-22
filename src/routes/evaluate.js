@@ -1,5 +1,6 @@
 import express from 'express';
 import { pool } from '../db.js';
+import { runQueue } from '../jobs/queue.js';
 
 const router = express.Router();
 
@@ -35,6 +36,7 @@ router.post('/', async (req, res) => {
       "INSERT INTO jobs (job_title, cv_id, report_id, status) VALUES ($1, $2, $3, 'queued') RETURNING id, status",
       [job_title, cv_id, report_id]
     );
+    await runQueue();
 
     const jobData = job.rows[0];
 

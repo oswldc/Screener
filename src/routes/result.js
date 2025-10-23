@@ -3,7 +3,7 @@ import { pool } from '../db.js';
 
 const router = express.Router();
 
-// GET
+// GET /result/:id
 router.get('/:id', async (req, res) => {
   try {
     const jobId = req.params.id;

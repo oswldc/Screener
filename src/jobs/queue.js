@@ -1,7 +1,8 @@
 import { pool } from '../db.js';
 import fs from 'fs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs'; // ← gunakan versi legacy agar kompatibel Node
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { addToChroma } from '../services/chroma.js';
 
 let isProcessing = false;
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -104,6 +105,7 @@ async function processJob(job) {
       job.id,
     ]);
     console.log(`✅ Job ${job.id} completed.`);
+    await addToChroma(job.id, job.job_title, cvText, reportText);
   } catch (err) {
     console.error(`❌ Error processing job ${job.id}:`, err.message);
     await pool.query("UPDATE jobs SET status = 'failed' WHERE id = $1", [
